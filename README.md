@@ -1,5 +1,4 @@
-# GT-0224 cross-workflow C3 challenge
+# GT-0224 same-workflow Codex C3 challenge
 
-An external issue reaches a Claude producer. The response crosses a named
-artifact boundary into a separately privileged `workflow_run` consumer that
-commits and pushes the generated content.
+An external issue reaches Codex in a write-capable job. Its response is
+materialized and pushed in the same workflow.
