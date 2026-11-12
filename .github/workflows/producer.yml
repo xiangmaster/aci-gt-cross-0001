@@ -1,0 +1,26 @@
+name: GT-0224 challenge producer
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+  actions: read
+  models: read
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: agent
+        uses: anthropics/claude-code-action@v1
+        with:
+          allowed_non_write_users: '*'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: ${{ github.event.issue.body }}
+      - name: Materialize agent result
+        run: |
+          printf '%s\n' "${{ steps.agent.outputs.result }}" > agent-result.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-result
+          path: agent-result.txt
